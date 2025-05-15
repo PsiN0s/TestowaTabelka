@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Testowa tabelka</title>
+  <style>
+    body { font-family: sans-serif; padding: 30px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+  <h1>Testowy tekst</h1>
+  <table id="data-table"></table>
+
+  <script>
+    fetch("AKfycbxwF-Ln9jQkr4GRD2f-Ocd-OzM7wBz0lb8hgLm5Vc6Lx3oe6li8ip1GrBhizLTReuVghttps://script.google.com/macros/s/AKfycbxwF-Ln9jQkr4GRD2f-Ocd-OzM7wBz0lb8hgLm5Vc6Lx3oe6li8ip1GrBhizLTReuVg/exec")
+      .then(res => res.json())
+      .then(data => {
+        const table = document.getElementById("data-table");
+
+        if (data.length === 0) {
+          table.innerHTML = "<tr><td>Brak danych</td></tr>";
+          return;
+        }
+
+        // Nagłówki
+        const headers = Object.keys(data[0]);
+        const headerRow = `<tr>${headers.map(h => `<th>${h}</th>`).join("")}</tr>`;
+        table.innerHTML = headerRow;
+
+        // Wiersze
+        data.forEach(row => {
+          const rowHTML = `<tr>${headers.map(h => `<td>${row[h]}</td>`).join("")}</tr>`;
+          table.innerHTML += rowHTML;
+        });
+      })
+      .catch(err => {
+        document.getElementById("data-table").innerHTML = "<tr><td>Błąd ładowania 😢</td></tr>";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
